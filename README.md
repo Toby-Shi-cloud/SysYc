@@ -15,7 +15,8 @@ SysYc supports the following features:
 - Arrays, arrays as function parameters
 - Control structures: `if`, `while`, `for`, `break`, `continue`
 - `&&` and `||` operators with short-circuit evaluation
-- Library functions: `getint`, `getch`, `putint`, `putch`, `printf` 
+- self-add and self-subtract operators (`++` and `--`)
+- Library functions: `getint`, `getchar`, `putint`, `putchar`, `printf` 
 
 > Note: `printf` will only support `%d`, `%s` and `%c` format specifiers.
 
