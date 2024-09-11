@@ -41,55 +41,61 @@ const int const_tk = 0, int_tk = 1, char_tk = 2, void_tk = 3, break_tk = 4,
           continue_tk = 5, if_tk = 6, else_tk = 7, while_tk = 8, for_tk = 9,
           return_tk = 10, not_tk = 11, and_tk = 12, or_tk = 13, plus_tk = 14,
           minus_tk = 15, mul_tk = 16, div_tk = 17, mod_tk = 18, inc_tk = 19,
-          dec_tk = 20, eq_tk = 21, neq_tk = 22, lss_tk = 23, leq_tk = 24,
-          gre_tk = 25, geq_tk = 26, assign_tk = 27, semicn_tk = 28,
-          comma_tk = 29, lparent_tk = 30, rparent_tk = 31, lbrack_tk = 32,
-          rbrack_tk = 33, lbrace_tk = 34, rbrace_tk = 35, intcon_tk = 36,
-          charcon_tk = 37, strcon_tk = 38, ident_tk = 39;
+          dec_tk = 20, shl_tk = 21, shr_tk = 22, eq_tk = 23, neq_tk = 24,
+          lss_tk = 25, leq_tk = 26, gre_tk = 27, geq_tk = 28, bitand_tk = 29,
+          bitxor_tk = 30, bitor_tk = 31, assign_tk = 32, semicn_tk = 33,
+          comma_tk = 34, lparent_tk = 35, rparent_tk = 36, lbrack_tk = 37,
+          rbrack_tk = 38, lbrace_tk = 39, rbrace_tk = 40, intcon_tk = 41,
+          charcon_tk = 42, strcon_tk = 43, ident_tk = 44;
 
 int lex_token_idx, lex_token_line;
 
 void token2str(int tk) {
-    if (tk == 0) printf("CONSTTK");
-    else if (tk == 1) printf("INTTK");
-    else if (tk == 2) printf("CHARTK");
-    else if (tk == 3) printf("VOIDTK");
-    else if (tk == 4) printf("BREAKTK");
-    else if (tk == 5) printf("CONTINUETK");
-    else if (tk == 6) printf("IFTK");
-    else if (tk == 7) printf("ELSETK");
-    else if (tk == 8) printf("WHILETK");
-    else if (tk == 9) printf("FORTK");
-    else if (tk == 10) printf("RETURNTK");
-    else if (tk == 11) printf("NOTTK");
-    else if (tk == 12) printf("ANDTK");
-    else if (tk == 13) printf("ORTK");
-    else if (tk == 14) printf("PLUSTK");
-    else if (tk == 15) printf("MINUSTK");
-    else if (tk == 16) printf("MULTK");
-    else if (tk == 17) printf("DIVTK");
-    else if (tk == 18) printf("MODTK");
-    else if (tk == 19) printf("INCTK");
-    else if (tk == 20) printf("DECTK");
-    else if (tk == 21) printf("EQTK");
-    else if (tk == 22) printf("NEQTK");
-    else if (tk == 23) printf("LSSTK");
-    else if (tk == 24) printf("LEQTK");
-    else if (tk == 25) printf("GRTK");
-    else if (tk == 26) printf("GEQTK");
-    else if (tk == 27) printf("ASSIGNTK");
-    else if (tk == 28) printf("SEMICNTK");
-    else if (tk == 29) printf("COMMATK");
-    else if (tk == 30) printf("LPARENTTK");
-    else if (tk == 31) printf("RPARENTTK");
-    else if (tk == 32) printf("LBRACKTK");
-    else if (tk == 33) printf("RBRACKTK");
-    else if (tk == 34) printf("LBRACETK");
-    else if (tk == 35) printf("RBRACETK");
-    else if (tk == 36) printf("INTCON");
-    else if (tk == 37) printf("CHARCON");
-    else if (tk == 38) printf("STRCON");
-    else if (tk == 39) printf("IDENTTK");
+    if (tk == const_tk) printf("CONSTTK");
+    else if (tk == int_tk) printf("INTTK");
+    else if (tk == char_tk) printf("CHARTK");
+    else if (tk == void_tk) printf("VOIDTK");
+    else if (tk == break_tk) printf("BREAKTK");
+    else if (tk == continue_tk) printf("CONTINUETK");
+    else if (tk == if_tk) printf("IFTK");
+    else if (tk == else_tk) printf("ELSETK");
+    else if (tk == while_tk) printf("WHILETK");
+    else if (tk == for_tk) printf("FORTK");
+    else if (tk == return_tk) printf("RETURNTK");
+    else if (tk == not_tk) printf("NOTTK");
+    else if (tk == and_tk) printf("ANDTK");
+    else if (tk == or_tk) printf("ORTK");
+    else if (tk == plus_tk) printf("PLUSTK");
+    else if (tk == minus_tk) printf("MINUSTK");
+    else if (tk == mul_tk) printf("MULTK");
+    else if (tk == div_tk) printf("DIVTK");
+    else if (tk == mod_tk) printf("MODTK");
+    else if (tk == inc_tk) printf("INCTK");
+    else if (tk == dec_tk) printf("DECTK");
+    else if (tk == shl_tk) printf("SHLTK");
+    else if (tk == shr_tk) printf("SHRTK");
+    else if (tk == eq_tk) printf("EQTK");
+    else if (tk == neq_tk) printf("NEQTK");
+    else if (tk == lss_tk) printf("LSSTK");
+    else if (tk == leq_tk) printf("LEQTK");
+    else if (tk == gre_tk) printf("GRETk");
+    else if (tk == geq_tk) printf("GEQTK");
+    else if (tk == bitand_tk) printf("BITANDTK");
+    else if (tk == bitxor_tk) printf("BITXORTK");
+    else if (tk == bitor_tk) printf("BITORTK");
+    else if (tk == assign_tk) printf("ASSIGNTK");
+    else if (tk == semicn_tk) printf("SEMICNTK");
+    else if (tk == comma_tk) printf("COMMATK");
+    else if (tk == lparent_tk) printf("LPARENTTK");
+    else if (tk == rparent_tk) printf("RPARENTTK");
+    else if (tk == lbrack_tk) printf("LBRACKTK");
+    else if (tk == rbrack_tk) printf("RBRACKTK");
+    else if (tk == lbrace_tk) printf("LBRACETK");
+    else if (tk == rbrace_tk) printf("RBRACETK");
+    else if (tk == intcon_tk) printf("INTCONTK");
+    else if (tk == charcon_tk) printf("CHARCONTK");
+    else if (tk == strcon_tk) printf("STRCONTK");
+    else if (tk == ident_tk) printf("IDENTTK");
     else printf("ERROR");
 }
 
@@ -160,6 +166,7 @@ int next_token() {
     } else if (ch == '<') {
         ch = next_char();
         if (ch == '=') return leq_tk;
+        else if (ch == '<') return shl_tk;
         else {
             unget_char();
             return lss_tk;
@@ -167,6 +174,7 @@ int next_token() {
     } else if (ch == '>') {
         ch = next_char();
         if (ch == '=') return geq_tk;
+        else if (ch == '>') return shr_tk;
         else {
             unget_char();
             return gre_tk;
@@ -176,19 +184,21 @@ int next_token() {
         if (ch == '&') return and_tk;
         else {
             unget_char();
-            return syntax_error;
+            return bitand_tk;
         }
     } else if (ch == '|') {
         ch = next_char();
         if (ch == '|') return or_tk;
         else {
             unget_char();
-            return syntax_error;
+            return bitor_tk;
         }
     } else if (ch == '*') {
         return mul_tk;
     } else if (ch == '%') {
         return mod_tk;
+    } else if (ch == '^') {
+        return bitxor_tk;
     } else if (ch == ';') {
         return semicn_tk;
     } else if (ch == ',') {

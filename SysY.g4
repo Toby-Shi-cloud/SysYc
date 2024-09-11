@@ -24,16 +24,15 @@ blockItem: decl | stmt;
 stmt: lVal ASSIGN exp SEMICN # assignStmt
     | exp? SEMICN # expStmt
     | block # blockStmt
-    | IFTK LPARENT cond RPARENT stmt (ELSETK stmt)? # ifStmt
-    | WHILETK LPARENT cond RPARENT stmt # whileStmt
-    | FORTK LPARENT forStmt? SEMICN cond? SEMICN forStmt? RPARENT stmt # forLoopStmt
+    | IFTK LPARENT exp RPARENT stmt (ELSETK stmt)? # ifStmt
+    | WHILETK LPARENT exp RPARENT stmt # whileStmt
+    | FORTK LPARENT forStmt? SEMICN exp? SEMICN forStmt? RPARENT stmt # forLoopStmt
     | BREAKTK SEMICN # breakStmt
     | CONTINUETK SEMICN # continueStmt
     | RETURNTK exp? SEMICN # returnStmt
     ;
 forStmt: lVal ASSIGN exp;
-exp: addExp;
-cond: lOrExp;
+exp: lOrExp;
 lVal: IDENFR (LBRACK exp RBRACK)*;
 primaryExp: LPARENT exp RPARENT | literal | lVal selfOp | selfOp? lVal;
 literal: INTCON | CHARCON | STRCON;
@@ -43,11 +42,15 @@ selfOp: INC | DEC;
 funcRParams: exp (COMMA exp)*;
 mulExp: unaryExp ((MULT | DIV | MOD) unaryExp)*;
 addExp: mulExp ((PLUS | MINU) mulExp)*;
-relExp: addExp ((LSS | LEQ | GRE | GEQ) addExp)*;
+shiftExp: addExp ((SHL | SHR) addExp)*;
+relExp: shiftExp ((LSS | LEQ | GRE | GEQ) shiftExp)*;
 eqExp: relExp ((EQL | NEQ) relExp)*;
-lAndExp: eqExp (AND eqExp)*;
+bAndExp: eqExp (BITAND eqExp)*;
+bXorExp: bAndExp (BITXOR bAndExp)*;
+bOrExp: bXorExp (BITOR bXorExp)*;
+lAndExp: bOrExp (AND bOrExp)*;
 lOrExp: lAndExp (OR lAndExp)*;
-constExp: addExp;
+constExp: lOrExp;
 
 // literal
 INTCON: '0' | [1-9][0-9]*;
@@ -82,12 +85,17 @@ DIV: '/';
 MOD: '%';
 INC: '++';
 DEC: '--';
+SHL: '<<';
+SHR: '>>';
 LSS: '<';
 LEQ: '<=';
 GRE: '>';
 GEQ: '>=';
 EQL: '==';
 NEQ: '!=';
+BITAND: '&';
+BITXOR: '^';
+BITOR: '|';
 ASSIGN: '=';
 SEMICN: ';';
 COMMA: ',';
