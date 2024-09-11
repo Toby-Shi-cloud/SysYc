@@ -1,3 +1,7 @@
 .vscode
 .antlr
 .cache
+
+# bin
+SysYc
+build
