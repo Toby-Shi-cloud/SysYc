@@ -252,11 +252,14 @@ int next_token() {
     }
 }
 
-int main() {
+int print_tokens() {
     int last_line = 0;
     while (1) {
         int tk = next_token();
-        if (tk < -1) printf("\nError at line %d\n", lex_token_line);
+        if (tk < -1) {
+            printf("\nError at line %d\n", lex_token_line);
+            return -1;
+        }
         if (tk < 0) break;
         if (last_line != lex_token_line) printf("\n%d ", lex_token_line);
         else printf(" ");
@@ -264,5 +267,10 @@ int main() {
         last_line = lex_token_line;
     }
     putchar(10);
+    return 0;
+}
+
+int main() {
+    if (print_tokens() < 0) return -1;
     return 0;
 }
