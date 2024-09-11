@@ -21,35 +21,36 @@ funcFParam: bType IDENFR (LBRACK RBRACK (LBRACK constExp RBRACK)*)?;
 block: LBRACE blockItem* RBRACE;
 blockItem: decl | stmt;
 
-stmt: lVal ASSIGN exp SEMICN # assignStmt
-    | exp? SEMICN # expStmt
+stmt: exp? SEMICN # expStmt
     | block # blockStmt
     | IFTK LPARENT exp RPARENT stmt (ELSETK stmt)? # ifStmt
     | WHILETK LPARENT exp RPARENT stmt # whileStmt
-    | FORTK LPARENT forStmt? SEMICN exp? SEMICN forStmt? RPARENT stmt # forLoopStmt
+    | FORTK LPARENT exp? SEMICN exp? SEMICN exp? RPARENT stmt # forLoopStmt
     | BREAKTK SEMICN # breakStmt
     | CONTINUETK SEMICN # continueStmt
     | RETURNTK exp? SEMICN # returnStmt
     ;
-forStmt: lVal ASSIGN exp;
-exp: lOrExp;
-lVal: IDENFR (LBRACK exp RBRACK)*;
-primaryExp: LPARENT exp RPARENT | literal | lVal selfOp | selfOp? lVal;
+exp: assignExp;
+lVal: IDENFR lValFollower;
+lValFollower: /*epsilon*/ | LBRACK exp RBRACK lValFollower;
+identFollower: lValFollower | LPARENT funcRParams? RPARENT | selfOp;
+primaryExp: LPARENT exp RPARENT | literal | selfOp lVal | IDENFR identFollower;
 literal: INTCON | CHARCON | STRCON;
-unaryExp: primaryExp | IDENFR LPARENT funcRParams? RPARENT | unaryOp unaryExp;
+unaryExp: primaryExp | unaryOp unaryExp;
 unaryOp: PLUS | MINU | NOT;
 selfOp: INC | DEC;
 funcRParams: exp (COMMA exp)*;
 mulExp: unaryExp ((MULT | DIV | MOD) unaryExp)*;
 addExp: mulExp ((PLUS | MINU) mulExp)*;
-shiftExp: addExp ((SHL | SHR) addExp)*;
-relExp: shiftExp ((LSS | LEQ | GRE | GEQ) shiftExp)*;
+shfExp: addExp ((SHL | SHR) addExp)*;
+relExp: shfExp ((LSS | LEQ | GRE | GEQ) shfExp)*;
 eqExp: relExp ((EQL | NEQ) relExp)*;
 bAndExp: eqExp (BITAND eqExp)*;
 bXorExp: bAndExp (BITXOR bAndExp)*;
 bOrExp: bXorExp (BITOR bXorExp)*;
 lAndExp: bOrExp (AND bOrExp)*;
 lOrExp: lAndExp (OR lAndExp)*;
+assignExp: (lVal ASSIGN)* lOrExp;
 constExp: lOrExp;
 
 // literal
